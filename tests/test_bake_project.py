@@ -141,18 +141,6 @@ def test_bake_with_apostrophe(bake_result):
 # endregion
 
 
-# @pytest.mark.parametrize(
-#     "bake_result", ([{"use_pypi_deployment_with_travis": "n"}]), indirect=True
-# )
-# def test_bake_without_travis_pypi_setup(bake_result: Result) -> None:
-#     result_travis_config = yaml.load(
-#         bake_result.project.join(".travis.yml").open(), Loader=yaml.FullLoader
-#     )
-#     assert "deploy" not in result_travis_config
-#     assert "python" == result_travis_config["language"]
-#     # found_toplevel_files = [f.basename for f in result.project.listdir()]
-
-
 # region Excluding files
 
 
