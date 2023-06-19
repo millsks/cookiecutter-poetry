@@ -9,7 +9,6 @@ from pathlib import Path
 from typing import Tuple
 
 import pytest
-import yaml
 from click.testing import CliRunner
 from cookiecutter.utils import rmtree
 from pytest_cookies.plugin import Cookies, Result
@@ -241,14 +240,14 @@ def cli_runner() -> CliRunner:
 
 @pytest.mark.parametrize(
     "bake_result",
-    ([{"command_line_interface": "No command-line interface"}]),
+    ([{"command_line_interface": "none"}]),
     indirect=True,
 )
 def test_bake_with_no_console_script(bake_result: Result) -> None:
     _, _, project_dir, _ = project_info(bake_result)
     assert not (project_dir / "cli.py").exists()
     assert (
-        f"tool.poetry.plugins." not in bake_result.project.join("pyproject.toml").read()
+        "tool.poetry.plugins." not in bake_result.project.join("pyproject.toml").read()
     )
 
 
@@ -265,16 +264,16 @@ def test_bake_with_click_console_script_files(bake_result: Result) -> None:
 
     assert (project_dir / "cli.py").exists()
     assert (
-        f"import click"
+        "import click"
         in bake_result.project.join("src")
         .join("python_boilerplate")
         .join("cli.py")
         .read()
     )
-    assert f'Click = "^7.0"' in bake_result.project.join("pyproject.toml").read()
+    assert 'Click = "^7.0"' in bake_result.project.join("pyproject.toml").read()
     assert (
         """[tool.poetry.plugins.\"console_scripts\"]
-    \"python_boilerplate\" = \"python_boilerplate.cli:main\""""
+\"python_boilerplate\" = \"python_boilerplate.cli:main\""""
         in bake_result.project.join("pyproject.toml").read()
     )
 
